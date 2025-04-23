@@ -1,0 +1,493 @@
+{
+	"info": {
+		"_postman_id": "d4b3f1c8-e20d-4cdd-8462-cd13f871c5d6",
+		"name": "API",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42348962"
+	},
+	"item": [
+		{
+			"name": "Equipo",
+			"item": [
+				{
+					"name": "Consultar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/equipos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let counter = pm.collectionVariables.get(\"equiposCounter\") || 0;\r",
+									"\r",
+									"if (counter < 100) {\r",
+									"    counter++;\r",
+									"    pm.collectionVariables.set(\"equiposCounter\", counter);\r",
+									"\r",
+									"    // Array of possible cities\r",
+									"    const cities = [\"Madrid\", \"Barcelona\", \"Manchester\", \"Liverpool\", \"London\", \"Paris\", \"Munich\", \"Milan\", \"Rome\", \"Turin\"];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"\r",
+									"    // Generate a random foundation year between 1850 and 2020\r",
+									"    const randomFoundationYear = Math.floor(Math.random() * (2020 - 1850 + 1)) + 1850;\r",
+									"    const foundationDate = `${randomFoundationYear}-01-01`; //simplifying to Jan 1st\r",
+									"\r",
+									"    const equipoData = {\r",
+									"        \"nombre\": `Equipo ${counter}`,\r",
+									"        \"ciudad\": randomCity,\r",
+									"        \"fundacion\": foundationDate\r",
+									"    };\r",
+									"\r",
+									"    pm.request.body.update(JSON.stringify(equipoData));\r",
+									"\r",
+									"    pm.sendRequest({\r",
+									"        url: pm.request.url.toString(),\r",
+									"        method: 'POST',\r",
+									"        header: {\r",
+									"            'Content-Type': 'application/json'\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify(equipoData)\r",
+									"        }\r",
+									"    }, function (err, response) {\r",
+									"        if (err) {\r",
+									"            console.error(err);\r",
+									"        } else {\r",
+									"            console.log(`Equipo ${counter} created - Status: ${response.code}`);\r",
+									"        }\r",
+									"    });\r",
+									"} else {\r",
+									"    console.log(\"Finished creating 100 equipos.\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/equipos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/equipos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jugadores",
+			"item": [
+				{
+					"name": "Consultar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/equipo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let counter = pm.collectionVariables.get(\"jugadoresCounter\") || 0;\r",
+									"// Assuming you have at least some equipos with IDs 1 to N\r",
+									"const randomEquipoId = Math.floor(Math.random() * 100) + 1; // Adjust range if needed\r",
+									"\r",
+									"if (counter < 100) {\r",
+									"    counter++;\r",
+									"    pm.collectionVariables.set(\"jugadoresCounter\", counter);\r",
+									"\r",
+									"    // Array of possible positions\r",
+									"    const positions = [\"Portero\", \"Defensa Central\", \"Lateral Derecho\", \"Lateral Izquierdo\", \"Mediocampista Defensivo\", \"Mediocampista Ofensivo\", \"Extremo Derecho\", \"Extremo Izquierdo\", \"Delantero Centro\", \"Segundo Delantero\"];\r",
+									"    const randomPosition = positions[Math.floor(Math.random() * positions.length)];\r",
+									"    const randomDorsal = Math.floor(Math.random() * 99) + 1;\r",
+									"    //Array of possible nacionalities\r",
+									"    const nacionalities = [\"Argentina\", \"Brazil\", \"England\", \"Spain\", \"France\", \"Germany\", \"Italy\", \"Portugal\", \"Netherlands\", \"Uruguay\"];\r",
+									"    const randomNationality = nacionalities[Math.floor(Math.random() * nacionalities.length)]\r",
+									"    // Generate a random date of birth\r",
+									"    const minDate = new Date(1985, 0, 1);  // January 1, 1985\r",
+									"    const maxDate = new Date(2005, 11, 31); // December 31, 2005\r",
+									"    const randomBirthDate = new Date(minDate.getTime() + Math.random() * (maxDate.getTime() - minDate.getTime()));\r",
+									"    const isoDate = randomBirthDate.toISOString().split('T')[0]; // Get YYYY-MM-DD\r",
+									"\r",
+									"    const jugadorData = {\r",
+									"        \"nombre\": `Jugador ${counter}`,\r",
+									"        \"posicion\": randomPosition,\r",
+									"        \"dorsal\": randomDorsal,\r",
+									"        \"fechaNacimiento\": isoDate,\r",
+									"        \"nacionalidad\": randomNationality,\r",
+									"        \"equipo\": {\r",
+									"            \"id\": randomEquipoId\r",
+									"        }\r",
+									"    };\r",
+									"\r",
+									"    pm.request.body.update(JSON.stringify(jugadorData));\r",
+									"\r",
+									"    pm.sendRequest({\r",
+									"        url: pm.request.url.toString(),\r",
+									"        method: 'POST',\r",
+									"        header: {\r",
+									"            'Content-Type': 'application/json'\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify(jugadorData)\r",
+									"        }\r",
+									"    }, function (err, response) {\r",
+									"        if (err) {\r",
+									"            console.error(err);\r",
+									"        } else {\r",
+									"            console.log(`Jugador ${counter} created - Status: ${response.code}`);\r",
+									"        }\r",
+									"    });\r",
+									"} else {\r",
+									"    console.log(\"Finished creating 100 jugadores.\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/jugadores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"jugadores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/equipo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Partidos",
+			"item": [
+				{
+					"name": "Consultar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/equipo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/equipo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estadisticas",
+			"item": [
+				{
+					"name": "Consultar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/equipo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/equipo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entrenadores",
+			"item": [
+				{
+					"name": "Consultar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/equipo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/equipo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "entrenadorCounter",
+			"value": "0",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		},
+		{
+			"key": "equiposCounter",
+			"value": "0",
+			"type": "string"
+		},
+		{
+			"key": "jugadoresCounter",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
