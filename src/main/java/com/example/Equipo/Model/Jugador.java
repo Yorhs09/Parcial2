@@ -36,4 +36,8 @@ public class Jugador {
 
     @OneToMany(mappedBy = "jugador")
     private List<Estadisticas> estadisticas;
+
+    public void setId(Long id) {
+
+    }
 }

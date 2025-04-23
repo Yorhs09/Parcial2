@@ -32,4 +32,8 @@ public class Estadisticas {
     @ManyToOne
     @JoinColumn(name = "partido_id")
     private Partido partido;
+
+    public void setId(Long id) {
+
+    }
 }

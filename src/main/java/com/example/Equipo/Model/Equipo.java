@@ -40,4 +40,7 @@ public class Equipo {
     @OneToMany(mappedBy = "equipoVisitante")
     private List<Partido> partidosVisitante;
 
+    public void setId(Long id) {
+
+    }
 }

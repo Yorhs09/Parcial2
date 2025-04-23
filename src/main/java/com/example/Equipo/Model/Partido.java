@@ -36,4 +36,8 @@ public class Partido {
 
     @OneToMany(mappedBy = "partido")
     private List<Estadisticas> estadisticas;
+
+    public void setId(Long id) {
+
+    }
 }

@@ -24,4 +24,8 @@ public class Entrenador {
 
     @ManyToMany(mappedBy = "entrenadores")
     private List<Equipo> equipos;
+
+    public void setId(Long id) {
+
+    }
 }
